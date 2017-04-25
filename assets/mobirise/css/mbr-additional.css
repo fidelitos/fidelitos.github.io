@@ -411,6 +411,20 @@ h6,
 .scrollToTop_wraper {
   opacity: 0 !important;
 }
+#msg-box5-f H3 {
+  text-align: left;
+  font-size: 36px;
+}
+#msg-box5-f P {
+  text-align: left;
+}
+#msg-box5-g H3 {
+  text-align: left;
+  font-size: 36px;
+}
+#msg-box5-g P {
+  text-align: left;
+}
 #menu-0 .hide-buttons .nav-btn {
   display: none !important;
 }
@@ -487,18 +501,4 @@ h6,
 }
 #form1-1 .form-control-label {
   color: #232323;
-}
-#msg-box5-f H3 {
-  text-align: left;
-  font-size: 36px;
-}
-#msg-box5-f P {
-  text-align: left;
-}
-#msg-box5-g H3 {
-  text-align: left;
-  font-size: 36px;
-}
-#msg-box5-g P {
-  text-align: left;
 }
