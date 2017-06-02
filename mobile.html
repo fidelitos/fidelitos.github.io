@@ -143,9 +143,13 @@
 <meta property="og:title" content="Your Title"/>  
 <meta property="og:description" content="Your description."/>  
 
-<a href='whatsapp://send?text=Text to send withe message: http://www.fidelitos.com/client data:https://fidelitosblob.blob.core.windows.net/imagescontainer/fdtuowru.jpg'>whatsApp</a>
-
-<a href='whatsapp://send?data=https://fidelitosblob.blob.core.windows.net/imagescontainer/fdtuowru.jpg'>whatsApp 2 </a>
+<script>
+	var text = "ola";
+	var url = "https://fidelitosblob.blob.core.windows.net/imagescontainer/fdtuowru.jpg";
+	var message = encodeURIComponent(text) + " - " + encodeURIComponent(url);
+	var whatsapp_url = "whatsapp://send?text=" + message;
+	window.location.href = whatsapp_url;
+</script>
 
 
 
