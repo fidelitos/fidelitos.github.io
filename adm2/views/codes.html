@@ -1,0 +1,40 @@
+<md-card ng-cloak="" ng-init="codes.load()">
+    <p><strong>Campanha:</strong> {{codes.card.name}}</p>
+    <p><strong>Regulamento:</strong> {{codes.card.description}}</p>
+    <md-divider></md-divider>
+    <div layout="row" flex layout-align="center center " class="not-print">
+        <md-button md-colors="{background: 'green'}" disabled>{{codes.descrDisp}}<br>{{codes.qtdAtivos}}</md-button>
+        <md-button md-colors="{background: 'blue'}"  disabled>{{codes.descrUtil}}<br>{{codes.qtdUtilizados}}</md-button>
+        <md-button md-colors="{background: 'amber'}" disabled>{{codes.descrTotal}}<br>{{codes.qtdTotal}}</md-button>
+    </div>
+    <md-divider ></md-divider>
+    <div layout="row" layout-align="center center" class="not-print">
+        <md-button aria-label="Adicionar" class="md-mini" ng-click="codes.createCodes()">
+            <ng-md-icon icon="note_add"></ng-md-icon>
+            {{codes.descrAdd}}
+          </md-button>
+          <md-button aria-label="Imprimir" class="md-mini" ng-click="codes.print()">
+            <ng-md-icon icon="print"></ng-md-icon>
+            {{codes.descrImprimir}}
+          </md-button>
+           <!--
+          <md-button aria-label="Compartilhar" class="md-mini" ng-click="codes.shared()" >
+            <ng-md-icon icon="share"></ng-md-icon>
+            {{codes.descrComp}}
+          </md-button>-->
+          
+          <!--<md-button aria-label="Remover" class="md-fab md-raised md-mini" ng-click="codes.remove()">
+            <ng-md-icon icon="delete"></ng-md-icon>
+          </md-button>-->
+        </div>
+    <div class="row code-list">
+        <div ng-repeat="code in codes.codigos" class="col-lg-2 text-center qr-code">
+            <qr text="code.visitKey" size="100" id="{{code.visitKey}}" ng-click="codes.imageQrShared('{{code.visitKey}}')" ></qr>
+            <br>
+            <small class="text-center">
+                <ng-pluralize count="code.score" when="{ '1': '1 PONTO','other': '{} PONTOS'}"></ng-pluralize>
+            </small>
+        </div>
+
+    </div>
+</md-card>

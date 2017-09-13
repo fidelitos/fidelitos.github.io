@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Dashboard Fidelitos</title>
+	
+	<script src="Chart.bundle.min.js"></script>    
+	<script src="utils.js"></script>    
+	<script src="jquery-3.1.1.min.js"></script>  
+	<script src="chartFidelitos.js"></script>	
+	
+    <style>
+    canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+	
+	.div_dashboard{
+		position: relative; 
+		float: left; 
+		margin:10px; 
+		border: 1px solid #87CEFF
+	}
+	.div_dashboard_min{
+		width:200px;
+		height:100px;
+		border:1px solid #87CEFF;
+		margin:10px; 
+		margin-right:30px; 
+		float: left; 
+		font: 90%/1.45em "Helvetica Neue",HelveticaNeue,Helvetica,Arial,sans-serif;
+		font-weight: bold;
+		color: #666;
+		font-size: 12px
+	}
+	
+    </style>
+</head>
+
+<body>
+	<div style="width:100%;" >				
+		<div class="div_dashboard" >		
+			<img src="loading.gif"  id="loading_1" />
+			<img src="info.png" style="width:18px;height:18px; position:absolute; right: 5px; top:5px;"  title="informacao do painel"/>
+			<canvas style="width:500px;height:300px;" id="canvas1"></canvas>
+			
+		</div>
+		<div class="div_dashboard">
+			<img src="info.png" style="width:18px;height:18px; position:absolute; right: 5px; top:5px;"  title="informacao do painel"/>
+			<img src="loading.gif"  id="loading_2" />
+			<canvas style="width:500px;height:300px;" id="canvas2"></canvas>
+			
+		</div>
+		<div class="div_dashboard">
+			<img src="info.png" style="width:18px;height:18px; position:absolute; right: 5px; top:5px;"  title="informacao do painel"/>
+			<img src="loading.gif"  id="loading_3" />
+			<canvas id="canvas3" style="width:500px;height:300px;"></canvas>
+			
+		</div>
+		
+		<div class="div_dashboard">
+			<img src="info.png" style="width:18px;height:18px; position:absolute; right: 5px; top:5px;"  title="informacao do painel"/>
+			<img src="loading.gif"  id="loading_4" />
+			<canvas id="canvas4" style="width:500px;height:300px;"></canvas>			
+		</div>
+		<div class="div_dashboard_min" >Total de Clientes <center><div style="position: relative; top:30px; font-size: 50px" id="info_qtd_client">-</div> </center></div>
+		<div class="div_dashboard_min" >Total de Registros <center><div style="position: relative; top:30px; font-size: 50px" id="info_qtd_register">-</div> </center></div>
+		<div class="div_dashboard_min" >Total de Recompensas <center><div style="position: relative; top:30px; font-size: 50px" id="info_qtd_reward">-</div> </center></div>
+		</br> </br>	</br>	</br>	</br>	</br>	</br>	</br>
+	</div>
+       
+</body>
+
+</html>

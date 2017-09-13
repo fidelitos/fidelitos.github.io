@@ -1,0 +1,173 @@
+
+<div flex layout="row" layout-wrap ng-cloak="" ng-init="card.LoadCards()">
+  <md-button class="md-fab md-fab-bottom-right" ng-click="card.OpenAddCardDialog()" aria-label="Add Card" style="position:fixed !important;">
+    <md-icon md-font-icon="glyphicon glyphicon-plus"></md-icon>
+    <md-tooltip md-direction="top" md-visible="tooltipVisible">Adicionar Campanha</md-tooltip>
+  </md-button>
+  <md-card ng-hide="!main.$mdMedia('gt-xs')">
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools">
+        <span>Campanhas Promocionais</span>
+        <div flex></div>
+      </div>
+    </md-toolbar>
+    <md-card-content >
+      <md-table-container >
+        <table md-table>
+          <thead md-head>
+            <tr md-row>
+              <th md-column><span>Nome</span></th>
+              <th md-column><span>Descrição</span></th>
+              <th md-column md-numeric>Pontos p/ Resgate</th>
+              <th md-column md-numeric>Validade (dias)</th>
+              <th md-column></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row ng-repeat="item in card.cards">
+              <td md-cell>{{item.name}}</td>
+              <td md-cell>{{item.description | limitTo:90}} <span ng-if="item.description.length > 90">...</span></td>
+              <td md-cell>{{item.achieve}}</td>
+              <td md-cell>{{item.interval_date}}</td>
+              <td md-cell style="width: 140px;">
+                <md-button class="md-icon-button" aria-label="Edit" ng-click="card.Edit(item)">
+                  <ng-md-icon icon="settings"></ng-md-icon>
+                  <md-tooltip md-direction="top">Configurações</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Edit" ng-href="#!/codes/{{item.id}}">
+                  <ng-md-icon icon="apps"></ng-md-icon>
+                  <md-tooltip md-direction="top">Códigos de pontuação offline</md-tooltip>
+                </md-button>
+              </td>
+            </tr>
+            <tr ng-hide="card.cards.length">
+              <td colspan="4" class="text-center" style="padding: 20px">
+                Nenhum Registro Encontrado
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+    </md-card-content>
+  </md-card >
+  <md-card flex-lg="30" flex-md="45" flex-sm="100" ng-repeat="item in card.cards" ng-hide="main.$mdMedia('gt-xs')">
+        <md-card-header>
+        <md-card-header-text>
+            <span class="md-title">{{item.name}}</span>
+          </md-card-header-text>
+        </md-card-header>
+        <md-card-content layout="column" layout-align="space-between">
+            <p>{{item.description}}</p>
+            <div layout="row">
+            <md-icon md-font-icon="glyphicon glyphicon-certificate"> {{item.achieve}} Pontos </md-icon>
+            <md-icon md-font-icon="glyphicon glyphicon-calendar"> {{item.interval_date}} Dias </md-icon>
+            </div>
+        </md-card-content>
+        <md-divider></md-divider>
+        <md-card-actions layout="row" layout-align="end end">
+            <md-button class="md-icon-button" aria-label="Edit" ng-click="card.Edit(item)">
+                <i class="glyphicon glyphicon-cog"></i>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Codes"  ng-href="#!/codes/{{item.id}}">
+                <i class="  glyphicon glyphicon-th"></i>
+            </md-button>
+        </md-card-actions>
+    </md-card>
+
+</div>
+<div style="visibility: hidden">
+  <div class="md-dialog-container" id="CardCodesDialog">
+    <md-dialog>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <h2 style="text-align:center;">Códigos da Campanha</h2>
+        </div>
+      </md-toolbar>
+      <md-dialog-content>
+        <div layout="row" flex layout-align="center center">
+          <md-button md-colors="{background: 'green'}" ng-disabled="true">Ativos <br> {{card.codes.qtdAtivos}}</md-button>
+          <md-button md-colors="{background: 'blue'}" ng-disabled="true">Usados <br> {{card.codes.qtdUtilizados}}</md-button>
+          <md-button md-colors="{background: 'amber'}" ng-disabled="true"> Total<br>{{card.codes.qtdTotal}}</md-button>
+        </div>
+      </md-dialog-content>
+
+      <md-dialog-actions>
+        <div layout="row" layout-align="center center">
+          <md-button class="md-icon-button" aria-label="Add" ng-click="card.createCodes()">
+            <i class="glyphicon glyphicon-plus"></i>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Print">
+            <i class="glyphicon glyphicon-print"></i>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Remove">
+            <i class="glyphicon glyphicon-trash"></i>
+          </md-button>
+        </div>
+      </md-dialog-actions>
+    </md-dialog>
+  </div>
+</div>
+<div style="visibility: hidden">
+  <div class="md-dialog-container" id="addCardDialog">
+    <md-dialog flex="{{!main.$mdMedia('gt-xs') ? 90 : 50 }}">
+
+      <form name="FormCard">
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <h2>{{card.editing ? 'Atualizar Campanha' : 'Cadastrar Nova Campanha'}}</h2>
+            <span flex></span>
+          </div>
+
+        </md-toolbar>
+        <md-dialog-content layout-padding>
+          <br>
+          <md-input-container class="md-block">
+            <label>Título</label>
+            <input type="text" name="name" ng-model="card.cadastro.name" placeholder="Título da Campanha" required="" />
+            <div ng-messages="FormCard.name.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Por favor, informe o Título.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Descrição</label>
+            <textarea ng-model="card.cadastro.description" placeholder="Descrição da campanha" md-maxlength="255" rows="3" required=""
+              name="description" md-select-on-focus></textarea>
+            <div ng-messages="FormCard.description.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Por favor, informe a descrição.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Regulamento</label>
+            <textarea ng-model="card.cadastro.rules" placeholder="Descrição das regras" md-maxlength="255" rows="3" required=""
+              name="rules" md-select-on-focus></textarea>
+            <div ng-messages="FormCard.description.$error" role="alert" multiple="">
+              <div ng-message="required" class="my-message">Por favor, informe o regulamento.</div>
+            </div>
+          </md-input-container>
+          <div layout="row">
+            <md-input-container flex class="md-block">
+              <label>Meta de Pontos</label>
+              <input type="number" name="achieve" ng-model="card.cadastro.achieve" placeholder="Meta de pontos para o resgate da recompensa"
+                required="" />
+              <div ng-messages="FormCard.achieve.$error" role="alert" multiple="">
+                <div ng-message="required" class="my-message">Por favor, informe a Meta.</div>
+              </div>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+              <label>Perído de Validade</label>
+              <input type="number" name="intervalDate" ng-model="card.cadastro.interval_date" placeholder="Prazo do cliente para atingir a meta"
+                required="" />
+              <div ng-messages="FormCard.intervalDate.$error" role="alert" multiple="">
+                <div ng-message="required" class="my-message">Por favor, informe a Validade.</div>
+              </div>
+            </md-input-container>
+          </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+          <md-button ng-disabled="!FormCard.$valid" ng-click="card.editing ? card.EditCard() : card.AddCard()" class="md-raised md-primary">{{card.editing ? 'Atualizar' : 'Cadastrar'}}</md-button>
+        </md-dialog-actions>
+      </form>
+
+    </md-dialog>
+  </div>
+</div>
